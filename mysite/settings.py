@@ -26,6 +26,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ll&oyg+q!b6vi1f1@qm5f-r(six2mfw4+3b5+2@r!0bd-^=4e5'
 
 ADMIN_PW = os.getenv("ADMIN_PW")
+# ADMIN_PW is read here from .env file and is used in polls/admin.py
+# to check if admin user already exists and if not, one is created.
+# This value leaks to browser with DEBUG = True and poor exeption
+# handling, thus enabling the user to access the admin panel at
+# /admin, with guessing that username 'admin' and providing the
+# password from browser. Accessing the admin panel gives access
+# to possibly sensitive information and possibly also deleting
+# data from database, depending on settings. By default, using
+# delete from admin panel by selecting objects, delete action uses
+# QuerySet.delete() and delete() in models.py is bypassed, thus
+# rendering useless possible checks for delete() in models.py.
+# Fix: In addition to modifications concerning DEBUG = True, do
+# not use this way for setting the admin password. See also comments
+# in file polls/admin.py. Delete lines for importing and using os and
+# dotenv, including ADMIN_PW = os.getenv(ADMIN_PW).
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # DEBUG = False
