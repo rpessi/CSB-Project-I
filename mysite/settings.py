@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-ll&oyg+q!b6vi1f1@qm5f-r(six2mfw4+3b5+2@r!0bd-^=4e5
 ADMIN_PW = os.getenv("ADMIN_PW")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 # This is the default value for DEBUG and as the file template clearly indicates, this should
 # never be turned on in production. What this setting does is prints all sorts of information
 # of the production firmware and also the values of environmental variables, including those
@@ -35,8 +36,22 @@ DEBUG = True
 # raise errors to see how what the values of variables are, when error is raised. In production,
 # better exception handling should be used and this setting should be set to False.
 # Fix: Set DEBUG = False for production. See also comments in file polls/views.py.
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+# With setting DEBUG = False, the default setting
+# ALLOWED_HOSTS = [] is not allowed. With DEBUG = True,
+# ALLOWED_HOSTS = [] is validated against ['.localhost', '127.0.0.1', '[::1]']
+# by default. Hence, ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+# is used here for trying out the program locally. With
+# ALLOWED_HOSTS = [] the server refuses to run. Thus,
+# the given setting is just for the purpose of this excercise,
+# not to be used in production. Furthermore, to make of use of
+# this scurity protection, the host name is to be checked using
+# get_host() instead of accessing the Host header directly
+# from request.META.
+# Fix: with DEBUG = False, use proper settings for
+# ALLOWED_HOSTS
 
 # Application definition
 
