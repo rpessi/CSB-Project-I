@@ -28,7 +28,13 @@ SECRET_KEY = 'django-insecure-ll&oyg+q!b6vi1f1@qm5f-r(six2mfw4+3b5+2@r!0bd-^=4e5
 ADMIN_PW = os.getenv("ADMIN_PW")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# Set DEBUG = False for production
+# This is the default value for DEBUG and as the file template clearly indicates, this should
+# never be turned on in production. What this setting does is prints all sorts of information
+# of the production firmware and also the values of environmental variables, including those
+# that are highly secret, if an error is raised. During development, it's quite usual to
+# raise errors to see how what the values of variables are, when error is raised. In production,
+# better exception handling should be used and this setting should be set to False.
+# Fix: Set DEBUG = False for production. See also comments in file polls/views.py.
 ALLOWED_HOSTS = []
 
 

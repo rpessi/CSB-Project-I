@@ -31,6 +31,14 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
         raise Exception("You didn't select a choice")
+        # Poor exception handling combined with DEBUG = True in settings.py causes
+        # the printing of environmental variables to browswer. This action is
+        # triggered when the user clicks the 'Vote' button before having selected
+        # an option to vote for. See also comments in mysite/settings.py.
+        # Raising errors and exeptions can be used during development phase for
+        # catching the errors and examining the values of local variables. However,
+        # this kind of exception handling should not be in production.
+        # Fix: Better handling of exception, as provided in the code template:
         #return render(
         #    request,
         #    "polls/detail.html",
