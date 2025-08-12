@@ -22,3 +22,5 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+# How to display timestamps in views or developer console?

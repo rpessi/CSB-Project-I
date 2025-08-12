@@ -7,10 +7,15 @@
 </head>
 
 <body>
+  {% load current_time %}
+  Current time: {% time_now %}
   <main>
     {% block content %}
     {% endblock %}
   </main>
+<footer>
+  <a href="{% url 'home' %}">Back to home page</a>
+</footer>
 </body>
 
 </html>
