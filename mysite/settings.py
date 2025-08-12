@@ -92,6 +92,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Problem: missing settings for session cookies
+# On a shared computer, if user A simply closes the browser tab instead
+# of logging out, user A remains logged in and anyone using
+# the same computer later can navigate to the site and will
+# be logged in as user A
+# The default value for SESSION_COOKIE_AGE is 1209600 (2 weeks, in seconds)
+
+# FIX: Add following configurations
+# SESSION_COOKIE_AGE = 120
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Reset the 'timer' during navigation:
+# SESSION_SAVE_EVERY_REQUEST = True
+
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
