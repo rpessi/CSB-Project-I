@@ -71,6 +71,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# FIX for flaw-4
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'django.contrib.admin',
@@ -79,7 +80,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts.apps.AccountsConfig',
+    'accounts', #comment out when using 'accounts.apps.AccountsConfig'
+    #'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -154,26 +156,34 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': 'False',
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': 'failed_logins.log',
-        },
-    },
-    'loggers': {
-        'django.security.LoginFailed': {
-            'handlers': ['console', 'file'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
-    },
-}
+# Fix for flaw-4, add simple logging for failed login attempts
+# See also accounts/apps.py and accounts/signals.py
+# Type A09 flaw, Security Logging and Monitorin Failures. One example of this is
+# not logging failed logins. A bare minimum of logging is done here to log failed
+# loging attempts, printing them to console and also writing them into a file.
+# The logs include the username and host address.Proper logging to be alerted
+# for repeated login attemps needs far more code and configuration.
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': 'False',
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#         'file': {
+#             'class': 'logging.FileHandler',
+#             'filename': 'failed_logins.log',
+#         },
+#     },
+#     'loggers': {
+#         'django.security.LoginFailed': {
+#             'handlers': ['console', 'file'],
+#             'level': 'WARNING',
+#             'propagate': False,
+#         },
+#     },
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
