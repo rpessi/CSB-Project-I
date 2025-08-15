@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -37,24 +38,25 @@ ADMIN_PW = os.getenv("ADMIN_PW")
 # delete from admin panel by selecting objects, delete action uses
 # QuerySet.delete() and delete() in models.py is bypassed, thus
 # rendering useless possible checks for delete() in models.py.
-# Fix: In addition to modifications concerning DEBUG = True, do
+# FIX for flaw-2: In addition to modifications concerning DEBUG = True, do
 # not use this way for setting the admin password. See also comments
 # in file polls/admin.py. Delete lines for importing and using os and
 # dotenv, including ADMIN_PW = os.getenv(ADMIN_PW).
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# DEBUG = False
+
 # This is the default value for DEBUG and as the file template clearly indicates, this should
 # never be turned on in production. What this setting does is prints all sorts of information
 # of the production firmware and also the values of environmental variables, including those
 # that are highly secret, if an error is raised. During development, it's quite usual to
 # raise errors to see how what the values of variables are, when error is raised. In production,
 # better exception handling should be used and this setting should be set to False.
-# Fix: Set DEBUG = False for production. See also comments in file polls/views.py.
+# FIX for flaw-1: Set DEBUG = False for production. See also comments in file polls/views.py.
+# DEBUG = False
 
 ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+
 # With setting DEBUG = False, the default setting
 # ALLOWED_HOSTS = [] is not allowed. With DEBUG = True,
 # ALLOWED_HOSTS = [] is validated against ['.localhost', '127.0.0.1', '[::1]']
@@ -66,12 +68,11 @@ ALLOWED_HOSTS = []
 # this scurity protection, the host name is to be checked using
 # get_host() instead of accessing the Host header directly
 # from request.META.
-# Fix: with DEBUG = False, use proper settings for
-# ALLOWED_HOSTS
+# FIX for flaw-1: with DEBUG = False, use proper settings for ALLOWED_HOSTS
+# ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
 
 # Application definition
 
-# FIX for flaw-4
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'django.contrib.admin',
@@ -81,6 +82,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts', #comment out when using 'accounts.apps.AccountsConfig'
+    # FIX for flaw-4
     #'accounts.apps.AccountsConfig',
 ]
 
@@ -101,7 +103,7 @@ MIDDLEWARE = [
 # be logged in as user A
 # The default value for SESSION_COOKIE_AGE is 1209600 (2 weeks, in seconds)
 
-# FIX: Add following configurations
+# FIX for flaw-3: Add following configurations
 # SESSION_COOKIE_AGE = 120
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Reset the 'timer' during navigation:
@@ -156,7 +158,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Fix for flaw-4, add simple logging for failed login attempts
+# FIX for flaw-4, add simple logging for failed login attempts
 # See also accounts/apps.py and accounts/signals.py
 # Type A09 flaw, Security Logging and Monitorin Failures. One example of this is
 # not logging failed logins. A bare minimum of logging is done here to log failed

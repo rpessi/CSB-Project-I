@@ -27,7 +27,6 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
-    current_time = timezone.now()
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
@@ -40,7 +39,7 @@ def vote(request, question_id):
         # Raising errors and exeptions can be used during development phase for
         # catching the errors and examining the values of local variables. However,
         # this kind of exception handling should not be in production.
-        # Fix: Better handling of exception, as provided in the code template:
+        # FIX for flaw-1: Better handling of exception, as provided in the code template:
         #return render(
         #    request,
         #    "polls/detail.html",

@@ -30,7 +30,7 @@ except User.DoesNotExist:
 # is not advisable, as environmental variables are leaked to
 # browser with DEBUG = True and poor exception handling. Superusers
 # can be created using manage.py CLI.
-# Fix: remove imports for get_user_model and settings, remove all
+# FIX for flaw-2: remove imports for get_user_model and settings, remove all
 # code for checking if admin is created and updating admin password
 
 admin.site.register(Question)
