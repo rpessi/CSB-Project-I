@@ -9,6 +9,11 @@
   {% csrf_token %}
   <label for email>New email address:</label>
   <input type="text" name="email"><br>
+  <!--FIX for flaw 5, injection through email update:
+  Use type="email" for input field:
+  <input type="text" name="email"><br>
+  -->
   <input type="submit" value="Submit">
 </form>
+
 {% endblock %}
