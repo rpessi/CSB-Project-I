@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Email Update{% endblock %}
+
+{% block content %}
+<h3>Update your password</h3>
+
+<form method="post">
+  {% csrf_token %}
+  <label for email>New email address:</label>
+  <input type="text" name="email"><br>
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
