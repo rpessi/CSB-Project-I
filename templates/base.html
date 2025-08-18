@@ -9,6 +9,11 @@
 <body>
   {% load current_time %}
   Current time: {% time_now %}
+  {% if user.is_authenticated %}
+    <p>Username: {{ user.username }}, Email: {{ user.email }}</p>
+    <p>Requirements for admin access:</p>
+    <p>Is superuser: {{ user.is_superuser }}, Is staff: {{ user.is_staff }}</p>
+  {% endif %}
   <main>
     {% block content %}
     {% endblock %}
