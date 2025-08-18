@@ -8,10 +8,12 @@
 <form method="post">
   {% csrf_token %}
   <label for email>New email address:</label>
-  <input type="text" name="email"><br>
+  <input type="text" name="email" size="80"><br>
   <!--FIX for flaw 5, injection through email update:
   Use type="email" for input field:
-  <input type="text" name="email"><br>
+  <input type="email" name="email"><br>
+  Notice: This setting can be bypassed by the user
+  by editing the code on browser!
   -->
   <input type="submit" value="Submit">
 </form>
