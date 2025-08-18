@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ll&oyg+q!b6vi1f1@qm5f-r(six2mfw4+3b5+2@r!0bd-^=4e5'
+SECRET_KEY = 'This_key_is_not_used'
 
 ADMIN_PW = os.getenv("ADMIN_PW")
 # ADMIN_PW is read here from .env file and is used in polls/admin.py
