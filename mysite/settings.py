@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from dotenv import load_dotenv
-import os
+from dotenv import load_dotenv #remove flaw-2
+import os #remove flaw-2
 from pathlib import Path
 
-load_dotenv()
+load_dotenv() #remove flaw-2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# This project does not use this key, but if you need a secret key
+# and are using Github Actions for CI/CD pipeline, you can store
+# these kinds of keys in Github Secrets.
 SECRET_KEY = 'This_key_is_not_used'
 
-ADMIN_PW = os.getenv("ADMIN_PW")
+ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
 # ADMIN_PW is read here from .env file and is used in polls/admin.py
 # to check if admin user already exists and if not, one is created.
 # This value leaks to browser with DEBUG = True and poor exeption
