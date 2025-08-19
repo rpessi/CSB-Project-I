@@ -23,6 +23,7 @@ except User.DoesNotExist: #remove
     password=password #remove
   ) #remove
 
+# FLAW-2
 # The presence of admin user in database is first checked.
 # If present, the password is updated by using the environmental
 # constant, which is read from .env file. If there's no admin

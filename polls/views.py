@@ -31,7 +31,8 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
-        raise Exception("You didn't select a choice")
+        raise Exception("You didn't select a choice") #remove flaw-1
+        # FLAW-1
         # Poor exception handling combined with DEBUG = True in settings.py causes
         # the printing of environmental variables to browswer. This action is
         # triggered when the user clicks the 'Vote' button before having selected

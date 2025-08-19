@@ -24,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# This project does not use this key, but if you need a secret key
+# NOTICE: This project does not use this key, but if you need a secret key
 # and are using Github Actions for CI/CD pipeline, you can store
 # these kinds of keys in Github Secrets.
 SECRET_KEY = 'This_key_is_not_used'
 
 ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
+
+# FLAW-2
 # ADMIN_PW is read here from .env file and is used in polls/admin.py
 # to check if admin user already exists and if not, one is created.
 # This value leaks to browser with DEBUG = True and poor exeption
@@ -49,6 +51,7 @@ ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# FLAW-1
 # This is the default value for DEBUG and as the file template clearly indicates, this should
 # never be turned on in production. What this setting does is prints all sorts of information
 # of the production firmware and also the values of environmental variables, including those
@@ -60,6 +63,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# FLAW-1
 # With setting DEBUG = False, the default setting
 # ALLOWED_HOSTS = [] is not allowed. With DEBUG = True,
 # ALLOWED_HOSTS = [] is validated against ['.localhost', '127.0.0.1', '[::1]']
@@ -99,7 +103,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Problem: missing settings for session cookies
+# FLAW-3:
+# Missing settings for session cookies
 # On a shared computer, if user A simply closes the browser tab instead
 # of logging out, user A remains logged in and anyone using
 # the same computer later can navigate to the site and will
@@ -131,7 +136,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -141,7 +145,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -161,6 +164,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# FLAW-4
+# Missing logging
 # FIX for flaw-4, add simple logging for failed login attempts
 # See also accounts/apps.py and accounts/signals.py
 # Type A09 flaw, Security Logging and Monitorin Failures. One example of this is
