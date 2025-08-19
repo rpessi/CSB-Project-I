@@ -2,26 +2,26 @@ from django.contrib import admin
 
 # imports for checking user and getting access to
 # environmental variables
-from django.contrib.auth import get_user_model
-from django.conf import settings
+from django.contrib.auth import get_user_model #remove
+from django.conf import settings #remove
 
 from .models import Question, Choice
 
-User = get_user_model()
+User = get_user_model() #remove
 
-username = 'admin'
-password = getattr(settings, 'ADMIN_PW', None)
+username = 'admin' #remove
+password = getattr(settings, 'ADMIN_PW', None) #remove
 
-try:
-  admin_user = User.objects.get(username=username)
-  admin_user.set_password(password)
-  admin_user.save()
-except User.DoesNotExist:
-  User.objects.create_superuser(
-    username=username,
-    email="admin@example.com",
-    password=password
-  )
+try: #remove
+  admin_user = User.objects.get(username=username) #remove
+  admin_user.set_password(password) #remove
+  admin_user.save() #remove
+except User.DoesNotExist: #remove
+  User.objects.create_superuser( #remove
+    username=username, #remove
+    email="admin@example.com", #remove
+    password=password #remove
+  ) #remove
 
 # The presence of admin user in database is first checked.
 # If present, the password is updated by using the environmental
