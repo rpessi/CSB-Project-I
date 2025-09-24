@@ -1,8 +1,8 @@
 """A module handling signals sent by Django"""
-# FLAW-4
+# FLAW-3
 # Missing logging
-# FIX for flaw-4:
-# This whole module is part of FIX for flaw-4, imports are not commented
+# FIX for flaw-3:
+# This whole module is part of FIX for flaw-3, imports are not commented
 # out in hopes of preventing import errors
 # See also apps.py and mysite/settings.py
 

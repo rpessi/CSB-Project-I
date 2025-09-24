@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from dotenv import load_dotenv #remove flaw-2
-import os #remove flaw-2
+from dotenv import load_dotenv #remove flaw-1b
+import os #remove flaw-1b
 from pathlib import Path
 
-load_dotenv() #remove flaw-2
+load_dotenv() #remove flaw-1b
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # these kinds of keys in Github Secrets.
 SECRET_KEY = 'This_key_is_not_used'
 
-ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
+ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-1b
 
-# FLAW-2
+# FLAW-1b
 # ADMIN_PW is read here from .env file and is used in polls/admin.py
 # to check if admin user already exists and if not, one is created.
 # This value leaks to browser with DEBUG = True and poor exeption
@@ -43,7 +43,7 @@ ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
 # delete from admin panel by selecting objects, delete action uses
 # QuerySet.delete() and delete() in models.py is bypassed, thus
 # rendering useless possible checks for delete() in models.py.
-# FIX for flaw-2: In addition to modifications concerning DEBUG = True, do
+# FIX for flaw-1b: In addition to modifications concerning DEBUG = True, do
 # not use this way for setting the admin password. See also comments
 # in file polls/admin.py. Delete lines for importing and using os and
 # dotenv, including ADMIN_PW = os.getenv(ADMIN_PW).
@@ -51,19 +51,19 @@ ADMIN_PW = os.getenv("ADMIN_PW") #remove flaw-2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# FLAW-1
+# FLAW-1a
 # This is the default value for DEBUG and as the file template clearly indicates, this should
 # never be turned on in production. What this setting does is prints all sorts of information
 # of the production firmware and also the values of environmental variables, including those
 # that are highly secret, if an error is raised. During development, it's quite usual to
 # raise errors to see how what the values of variables are, when error is raised. In production,
 # better exception handling should be used and this setting should be set to False.
-# FIX for flaw-1: Set DEBUG = False for production. See also comments in file polls/views.py.
+# FIX for flaw-1a: Set DEBUG = False for production. See also comments in file polls/views.py.
 # DEBUG = False
 
 ALLOWED_HOSTS = []
 
-# FLAW-1
+# FLAW-1a
 # With setting DEBUG = False, the default setting
 # ALLOWED_HOSTS = [] is not allowed. With DEBUG = True,
 # ALLOWED_HOSTS = [] is validated against ['.localhost', '127.0.0.1', '[::1]']
@@ -75,7 +75,7 @@ ALLOWED_HOSTS = []
 # this scurity protection, the host name is to be checked using
 # get_host() instead of accessing the Host header directly
 # from request.META.
-# FIX for flaw-1: with DEBUG = False, use proper settings for ALLOWED_HOSTS
+# FIX for flaw-1a: with DEBUG = False, use proper settings for ALLOWED_HOSTS
 # ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
 
 # Application definition
@@ -89,7 +89,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts', #comment out when using 'accounts.apps.AccountsConfig'
-    # FIX for flaw-4
+    # FIX for flaw-3
     #'accounts.apps.AccountsConfig',
 ]
 
@@ -103,7 +103,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# FLAW-3:
+# FLAW-2 *:
 # Missing settings for session cookies
 # On a shared computer, if user A simply closes the browser tab instead
 # of logging out, user A remains logged in and anyone using
@@ -111,7 +111,7 @@ MIDDLEWARE = [
 # be logged in as user A
 # The default value for SESSION_COOKIE_AGE is 1209600 (2 weeks, in seconds)
 
-# FIX for flaw-3: Add following configurations
+# FIX for flaw-2 *: Add following configurations
 # SESSION_COOKIE_AGE = 120
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Reset the 'timer' during navigation:
@@ -164,9 +164,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# FLAW-4
+# FLAW-3
 # Missing logging
-# FIX for flaw-4, add simple logging for failed login attempts
+# FIX for flaw-3, add simple logging for failed login attempts
 # See also accounts/apps.py and accounts/signals.py
 # Type A09 flaw, Security Logging and Monitorin Failures. One example of this is
 # not logging failed logins. A bare minimum of logging is done here to log failed
