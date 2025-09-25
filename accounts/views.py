@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 from django.db import connection #remove flaw-4
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
@@ -34,7 +34,17 @@ def email_update(request):
 
 @login_required
 def users(request):
-    users = User.objects.all().values('username', 'email')
-    #FLAW-5, broken access control
-    #This page is meant to be accessed only by admins
-    return render(request, "users.html", {"users": users})
+    # FLAW-5, broken access control
+    # This page is meant to be accessed only by admins, not regular users
+    # Remove lines to fix flaw-5
+    users = User.objects.all().values('username', 'email') #remove flaw-5
+    return render(request, "users.html", {"users": users}) #remove flaw5
+    # End of REMOVE-block
+
+    # FIX for flaw-5:
+    # if request.user.is_staff and request.user.is_superuser:
+    #    users = User.objects.all().values('username', 'email')
+    #    return render(request, "users.html", {"users": users})
+    # else:
+    #    return HttpResponseForbidden("You are not authorized to see this content.")
+    # End of FIX-block
